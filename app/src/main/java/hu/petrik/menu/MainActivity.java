@@ -25,12 +25,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //1.lépés adat lementése
                 adatMentes();
-                //2. lépés átmegyünk egy másik Activity-re (ablakra)
-                // honnan - hova
-                Intent intent = new Intent(MainActivity.this, MasodikActivity.class);
-                startActivity(intent);
-                //backStack
-                finish();
             }
         });
     }
@@ -39,9 +33,20 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String seged = editTextInput.getText().toString();
-        editor.putString("data", seged);
-        // editor.commit(); sikerült -e? -> ad egy boolean értéket!
-        editor.apply();
+        if (seged.equals("")){
+            editTextInput.setError("Muszáj kitölteni");
+        } else {
+            editor.putString("editTextErteke", seged);
+            // editor.commit(); sikerült -e? -> ad egy boolean értéket!
+            editor.apply();
+
+            //2. lépés átmegyünk egy másik Activity-re (ablakra)
+            // honnan - hova
+            Intent intent = new Intent(MainActivity.this, MasodikActivity.class);
+            startActivity(intent);
+            //backStack
+            finish();
+        }
     }
 
     private void init() {
